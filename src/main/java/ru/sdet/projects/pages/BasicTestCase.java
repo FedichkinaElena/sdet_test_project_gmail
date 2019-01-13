@@ -5,6 +5,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -20,7 +21,8 @@ public class BasicTestCase {
 
     public static WebDriver getWebDriver(String driverType) throws MalformedURLException {
         DesiredCapabilities capability;
-        String baseUrl = "http://gmail.com";
+//        String baseUrl = "http://gmail.com";
+        String baseUrl = System.getProperty("at.base.url");
         if (driverType.equalsIgnoreCase("firefox")) {
             capability = DesiredCapabilities.firefox();
             capability.setBrowserName("firefox");
@@ -34,10 +36,10 @@ public class BasicTestCase {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
             driver = new ChromeDriver();
         } //else if (driverType.equalsIgnoreCase("opera")) {
-//            capability = DesiredCapabilities.chrome();
-//            capability.setBrowserName("chrome");
-//            System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-//            driver = new ChromeDriver();
+//            capability = DesiredCapabilities.operaBlink();
+//            capability.setBrowserName("opera");
+//            System.setProperty("webdriver.opera.driver", "src/main/resources/operadriver.exe");
+//            driver = new OperaDriver();
 //        }
 //        try {
 //            driver = new RemoteWebDriver(new URL("http://localhost:4443/wd/hub"), capability);

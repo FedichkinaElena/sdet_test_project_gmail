@@ -56,10 +56,11 @@
                 <version>2.14</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <test.jdbc.url>http://gmail.com</test.jdbc.url>
+                        <at.base.url>http://gmail.com</at.base.url>
                         <at.login>testing0tester924@gmail.com</at.login>
                         <at.password>Axaha0test.</at.password>
-                        <at.testername>Федичкина Елена</at.testername>
+                        <at.userName.from>Алена Федичкина</at.userName.from>
+                        <at.tester.name>Федичкина Елена</at.tester.name>
                         <at.email.to>nika-alenka@mail.ru</at.email.to>
                     </systemPropertyVariables>
                     <testFailureIgnore>false</testFailureIgnore>

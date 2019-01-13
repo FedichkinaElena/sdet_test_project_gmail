@@ -25,11 +25,11 @@ public class FireFoxTest extends BasicTestCase {
     private static String COUNT;
     //    private static String USER_NAME_FROM = "Филинин Илья";
 //    private static String EMAIL_TO = "ilya.filinin@simbirsoft.com";
-    private static String USER_NAME_FROM = "Алена Федичкина";
-    private static String EMAIL_TO = "nika-alenka@mail.ru";
-    private static String TESTER_NAME = "Федичкина Елена";
-    private static String LOGIN = "testing0tester924@gmail.com";
-    private static String PASSWORD = "Axaha0test.";
+//    private static String USER_NAME_FROM = "Алена Федичкина";
+//    private static String EMAIL_TO = "nika-alenka@mail.ru";
+//    private static String TESTER_NAME = "Федичкина Елена";
+//    private static String LOGIN = "testing0tester924@gmail.com";
+//    private static String PASSWORD = "Axaha0test.";
 
     @BeforeClass
     public static void setup() throws MalformedURLException {
@@ -44,33 +44,20 @@ public class FireFoxTest extends BasicTestCase {
 
     @Test
     public void firefoxTest() {
-        Assert.assertTrue(driver.getCurrentUrl().contains("accounts.google.com/signin/"));
+        String login = System.getProperty("at.login");
+        String password = System.getProperty("at.password");
+        String userNameFrom = System.getProperty("at.userName.from");
+
         // логин в почту заданного пользователя
-        firefoxPage.loginUserMail(firefoxPage);
-//        //login
-//        firefoxPage.inputLogin(LOGIN);
-//        firefoxPage.clickBtnLoginNext();
-//        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
-//        WebDriverWait wait = new WebDriverWait(driver, 10);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type=password]")));
-//        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type=password]")));
-//        firefoxPage.inputPassword(PASSWORD);
-//        firefoxPage.clickBtnPasswordNext();
-
+        firefoxPage.loginUserMail(login, password);
         // поиск писем от заданного отправителя
-        firefoxPage.txtInputSearchParam.sendKeys("from:" + System.getProperty("at.username.from") + Keys.ENTER);
-        // кол-во писем
+        firefoxPage.searchMailFrom(userNameFrom);
+        // поиск кол-ва найденных писем
         COUNT = firefoxPage.getFoundMailCount();
-
-
-//        //search
-//        firefoxPage.txtInputSearchParam.sendKeys("from:" + USER_NAME_FROM + Keys.ENTER);
-//        COUNT = firefoxPage.getFoundMailCount();
-
         // отправка нового письма
         firefoxPage.sendNewEmail(
                 System.getProperty("at.email.to"),
-                "Тестовое задание. " + System.getProperty("at.testername"),
+                "Тестовое задание. " + System.getProperty("at.tester.name"),
                 "От " + System.getProperty("at.username.from") + " найдено " + COUNT + " писем.\nБраузер Firefox");
     }
 }

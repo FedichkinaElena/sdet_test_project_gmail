@@ -73,17 +73,20 @@ public class ChromeTest extends BasicTestCase {
 
     @Test
     public void chromeTest() {
-        Assert.assertTrue(driver.getCurrentUrl().contains("accounts.google.com/signin/"));
+        String login = System.getProperty("at.login");
+        String password = System.getProperty("at.password");
+        String userNameFrom = System.getProperty("at.userName.from");
+
         // логин в почту заданного пользователя
-        chromePage.loginUserMail(chromePage);
+        chromePage.loginUserMail(login, password);
         // поиск писем от заданного отправителя
-        chromePage.txtInputSearchParam.sendKeys("from:" + System.getProperty("at.username.from") + Keys.ENTER);
-        // кол-во писем
+        chromePage.searchMailFrom(userNameFrom);
+        // поиск кол-ва найденных писем
         COUNT = chromePage.getFoundMailCount();
         // отправка нового письма
         chromePage.sendNewEmail(
                 System.getProperty("at.email.to"),
-                "Тестовое задание. " + System.getProperty("at.testername"),
+                "Тестовое задание. " + System.getProperty("at.tester.name"),
                 "От " + System.getProperty("at.username.from") + " найдено " + COUNT + " писем.\nБраузер Chrome");
     }
 }

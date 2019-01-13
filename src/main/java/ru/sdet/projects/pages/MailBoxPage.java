@@ -2,6 +2,7 @@ package ru.sdet.projects.pages;
 
 import io.qameta.allure.Step;
 import org.junit.Assert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,10 +59,6 @@ public class MailBoxPage {
     @FindBy(xpath = "//span[text()='Письмо отправлено.']")
     private WebElement lblSentEmail;
 
-    public String getFoundMailCount() {
-        return lblCounter.getAttribute("innerHTML");
-    }
-
     public void inputLogin(String login) {
         txtInputLogin.sendKeys(login);
     }
@@ -95,10 +92,30 @@ public class MailBoxPage {
         txtInputEmailBody.sendKeys(emailBody);
     }
 
+    @Step("Проверка отправки письма")
     private void checkEmailSent() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.elementToBeClickable(lblSentEmail));
         Assert.assertTrue(lblSentEmail.isDisplayed());
+    }
+
+    @Step("Залогиниться в хардкодную почту")
+    public void loginUserMail(String login, String password){//MailBoxPage page){
+        this.inputLogin(login);
+        this.clickBtnLoginNext();
+        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
+        this.inputPassword(password);
+        this.clickBtnPasswordNext();
+    }
+
+    @Step("Поиск писем от заданного отправителя")
+    public void searchMailFrom(String userNameFrom){
+        this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
+    }
+
+    @Step("Поиск кол-ва найденных писем")
+    public String getFoundMailCount() {
+        return lblCounter.getAttribute("innerHTML");
     }
 
     @Step("Отправить новое письмо")
@@ -109,15 +126,5 @@ public class MailBoxPage {
         inputEmailBody(emailBody);
         btnSendEmail.click();
         checkEmailSent();
-    }
-
-    @Step("Залогиниться в хардкодную почту")
-    public void loginUserMail(MailBoxPage page){
-        page.inputLogin(System.getProperty("at.login"));
-        page.clickBtnLoginNext();
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
-
-        page.inputPassword(System.getProperty("at.password"));
-        page.clickBtnPasswordNext();
     }
 }
