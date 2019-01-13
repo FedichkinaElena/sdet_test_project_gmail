@@ -45,23 +45,32 @@ public class FireFoxTest extends BasicTestCase {
     @Test
     public void firefoxTest() {
         Assert.assertTrue(driver.getCurrentUrl().contains("accounts.google.com/signin/"));
+        // логин в почту заданного пользователя
+        firefoxPage.loginUserMail(firefoxPage);
+//        //login
+//        firefoxPage.inputLogin(LOGIN);
+//        firefoxPage.clickBtnLoginNext();
+//        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
+//        WebDriverWait wait = new WebDriverWait(driver, 10);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type=password]")));
+//        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type=password]")));
+//        firefoxPage.inputPassword(PASSWORD);
+//        firefoxPage.clickBtnPasswordNext();
 
-        //login
-        firefoxPage.inputLogin(LOGIN);
-        firefoxPage.clickBtnLoginNext();
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type=password]")));
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("input[type=password]")));
-        firefoxPage.inputPassword(PASSWORD);
-        firefoxPage.clickBtnPasswordNext();
-
-        //search
-        firefoxPage.txtInputSearchParam.sendKeys("from:" + USER_NAME_FROM + Keys.ENTER);
+        // поиск писем от заданного отправителя
+        firefoxPage.txtInputSearchParam.sendKeys("from:" + System.getProperty("at.username.from") + Keys.ENTER);
+        // кол-во писем
         COUNT = firefoxPage.getFoundMailCount();
+
+
+//        //search
+//        firefoxPage.txtInputSearchParam.sendKeys("from:" + USER_NAME_FROM + Keys.ENTER);
+//        COUNT = firefoxPage.getFoundMailCount();
+
+        // отправка нового письма
         firefoxPage.sendNewEmail(
-                EMAIL_TO,
-                "Тестовое задание. " + TESTER_NAME,
-                "От " + USER_NAME_FROM + " найдено " + COUNT + " писем.\nБраузер Firefox");
+                System.getProperty("at.email.to"),
+                "Тестовое задание. " + System.getProperty("at.testername"),
+                "От " + System.getProperty("at.username.from") + " найдено " + COUNT + " писем.\nБраузер Firefox");
     }
 }

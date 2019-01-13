@@ -1,10 +1,13 @@
 package ru.sdet.projects.pages;
 
 import io.qameta.allure.Step;
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailBoxPage {
 
@@ -12,19 +15,19 @@ public class MailBoxPage {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-    public WebDriver driver;
+    protected WebDriver driver;
 
     @FindBy(id = "identifierId")
-    public WebElement txtInputLogin;
+    private WebElement txtInputLogin;
 
     @FindBy(id = "identifierNext")
-    public WebElement btnLoginNext;
+    private WebElement btnLoginNext;
 
     @FindBy(css = "input[type=password]")
-    public WebElement txtInputPassword;
+    private WebElement txtInputPassword;
 
     @FindBy(css = "#passwordNext")
-    public WebElement btnPasswordNext;
+    private WebElement btnPasswordNext;
 
     @FindBy(css = "input[placeholder='Поиск в почте']")
     public WebElement txtInputSearchParam;
@@ -35,6 +38,10 @@ public class MailBoxPage {
 
     @FindBy(xpath = "//div[text()='Написать']")
     private WebElement btnCreateNewMail;
+
+//    @FindBy(xpath = "//textarea[@class='vO']")
+    @FindBy(xpath = "//table[@class='aoP aoC']/.//div[@class='aoD hl']/div[text()='Получатели']")
+    private WebElement txtEmailFrom;
 
     @FindBy(xpath = "//textarea[@class='vO']")
     private WebElement txtInputEmailFrom;
@@ -47,6 +54,9 @@ public class MailBoxPage {
 
     @FindBy(xpath = "//div[text()='Отправить']")
     private WebElement btnSendEmail;
+
+    @FindBy(xpath = "//span[text()='Письмо отправлено.']")
+    private WebElement lblSentEmail;
 
     public String getFoundMailCount() {
         return lblCounter.getAttribute("innerHTML");
@@ -61,6 +71,9 @@ public class MailBoxPage {
     }
 
     public void inputPassword(String password) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(txtInputPassword));
+        wait.until(ExpectedConditions.elementToBeClickable(txtInputPassword));
         txtInputPassword.sendKeys(password);
     }
 
@@ -69,6 +82,8 @@ public class MailBoxPage {
     }
 
     private void setEmailFrom(String nameFrom) {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(txtInputEmailFrom));
         txtInputEmailFrom.sendKeys(nameFrom);
     }
 
@@ -80,12 +95,29 @@ public class MailBoxPage {
         txtInputEmailBody.sendKeys(emailBody);
     }
 
-    @Step("Отправить новое письма")
+    private void checkEmailSent() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(lblSentEmail));
+        Assert.assertTrue(lblSentEmail.isDisplayed());
+    }
+
+    @Step("Отправить новое письмо")
     public void sendNewEmail(String nameFrom, String emailSubjecr, String emailBody) {
         btnCreateNewMail.click();
         setEmailFrom(nameFrom);
         setEmailSubject(emailSubjecr);
         inputEmailBody(emailBody);
         btnSendEmail.click();
+        checkEmailSent();
+    }
+
+    @Step("Залогиниться в хардкодную почту")
+    public void loginUserMail(MailBoxPage page){
+        page.inputLogin(System.getProperty("at.login"));
+        page.clickBtnLoginNext();
+        Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
+
+        page.inputPassword(System.getProperty("at.password"));
+        page.clickBtnPasswordNext();
     }
 }
