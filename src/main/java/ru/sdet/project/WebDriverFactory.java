@@ -1,4 +1,4 @@
-package ru.sdet.projects.pages;
+package ru.sdet.project;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -40,11 +40,8 @@ public class WebDriverFactory {
      * @return RemoteWebDriver
      */
     public static WebDriver getInstance(String gridHubUrl, String browserName) {
-
         WebDriver webDriver = null;
-
         DesiredCapabilities capability = new DesiredCapabilities();
-//        String browserName = browser.getName();
         capability.setJavascriptEnabled(true);
 
         // In case there is no Hub
@@ -83,14 +80,12 @@ public class WebDriverFactory {
      */
     public static WebDriver getInstance(String browserName) {
         WebDriver webDriver = null;
-
         if (CHROME.equalsIgnoreCase(browserName)) {
             setChromeDriver();
-
             webDriver = new ChromeDriver();
         } else if (FIREFOX.equalsIgnoreCase(browserName)) {
+            setFirefoxDriver();
             webDriver = new FirefoxDriver();
-
         }
         return webDriver;
     }
@@ -100,11 +95,8 @@ public class WebDriverFactory {
      *
      * @param capability : DesiredCapabilities object coming from the selected
      * browser
-     *
      * @param version : browser version
-     *
      * @param platform : browser platform
-     *
      * @return DesiredCapabilities
      */
     private static DesiredCapabilities setVersionAndPlatform(
@@ -121,9 +113,16 @@ public class WebDriverFactory {
     }
 
     /*
-     * Helper method to set ChromeDriver location into the right ststem property
+     * Helper method to set ChromeDriver location into the right system property
      */
     private static void setChromeDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+    }
+
+    /*
+     * Helper method to set FirefoxDriver location into the right system property
+     */
+    private static void setFirefoxDriver() {
+        System.setProperty("webdriver.gecko.driver", "src/main/resources/drivers/geckodriver.exe");
     }
 }

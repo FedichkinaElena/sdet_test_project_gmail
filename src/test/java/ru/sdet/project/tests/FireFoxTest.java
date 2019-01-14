@@ -1,39 +1,42 @@
-package ru.sdet.project;
+package ru.sdet.project.tests;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import ru.sdet.project.BasicTestCase;
+import ru.sdet.project.MailBoxPage;
 
 import java.net.MalformedURLException;
 
-public class ChromeTest extends BasicTestCase {
-//    private static WebDriver driver;
-    private static MailBoxPage chromePage;
+public class FireFoxTest extends BasicTestCase {
+    private static WebDriver driver;
+    private static MailBoxPage firefoxPage;
 //    private static String USER_NAME_FROM = "Филинин Илья";
 //    private static String EMAIL_TO = "ilya.filinin@simbirsoft.com";
 
-    @BeforeClass
+    @BeforeTest
     public static void setup() throws MalformedURLException {
-        driver = getWebDriver("chrome");
-        chromePage = PageFactory.initElements(driver, MailBoxPage.class);
+        driver = getWebDriver("firefox");
+        firefoxPage = PageFactory.initElements(driver, MailBoxPage.class);
     }
 
     @Test
-    public void chromeTest() {
+    public void firefoxTest() {
         String login = System.getProperty("at.login");
         String password = System.getProperty("at.password");
         String userNameFrom = System.getProperty("at.userName.from");
 
         // логин в почту заданного пользователя
-        chromePage.loginUserMail(login, password);
+        firefoxPage.loginUserMail(login, password);
         // поиск писем от заданного отправителя
-        chromePage.searchMailFrom(userNameFrom);
+        firefoxPage.searchMailFrom(userNameFrom);
         // поиск кол-ва найденных писем
-        String count = chromePage.getFoundMailCount();
+        String count = firefoxPage.getFoundMailCount();
         // отправка нового письма
-        chromePage.sendNewEmail(
+        firefoxPage.sendNewEmail(
                 System.getProperty("at.email.to"),
                 "Тестовое задание. " + System.getProperty("at.tester.name"),
-                "От " + System.getProperty("at.userName.from") + " найдено " + count + " писем.\nБраузер Chrome");
+                "От " + System.getProperty("at.userName.from") + " найдено " + count + " писем.\nБраузер Firefox");
     }
 }

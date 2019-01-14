@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="ScheduleBusTest" parallel="tests" thread-count="1">
-    <test name="ChromeTest" verbose="1" parallel="true">
-        <parameter name="browserName" value="chrome" />
-        <parameter name="browserVersion" value="71.0.3578.98" />
+<suite name="SdetTests" verbose="2" annotations="JDK">
+    <test name="ChromeTest" >
+        <!--<parameter name="browserName" value="chrome" />-->
+        <!--<parameter name="browserVersion" value="71.0.3578.98" />-->
+        <!--<parameter name="at.base.url" value="http://gmail.com" />-->
+        <!--<parameter name="at.login" value="testing0tester924@gmail.com" />-->
+        <!--<parameter name="at.password" value="Axaha0test." />-->
+        <!--<parameter name="at.userName.from" value="Алена Федичкина" />-->
+        <!--<parameter name="at.tester.name" value="Федичкина Елена" />-->
+        <!--<parameter name="at.email.to" value="nika-alenka@mail.ru" />-->
         <classes>
-            <class name="ru.sdet.projects.ChromeTest" />
+            <class name="ru.sdet.project.tests.ChromeTest" />
         </classes>
     </test>
-    <test name="FireFoxTest" verbose="1" parallel="true">
-        <parameter name="browserName" value="firefox" />
-        <parameter name="browserVersion" value="64.0.2" />
+    <test name="FireFoxTest" >
+        <!--&lt;!&ndash;<parameter name="browserName" value="firefox" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="browserVersion" value="64.0.2" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.base.url" value="http://gmail.com" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.login" value="testing0tester924@gmail.com" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.password" value="Axaha0test." />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.userName.from" value="Алена Федичкина" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.tester.name" value="Федичкина Елена" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<parameter name="at.email.to" value="nika-alenka@mail.ru" />&ndash;&gt;-->
         <classes>
-            <class name="ru.sdet.projects.FireFoxTest" />
+            <class name="ru.sdet.project.tests.FireFoxTest" />
         </classes>
     </test>
 </suite>

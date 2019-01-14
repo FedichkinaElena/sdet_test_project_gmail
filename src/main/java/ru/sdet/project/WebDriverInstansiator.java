@@ -1,4 +1,4 @@
-package ru.sdet.projects.pages;
+package ru.sdet.project;
 
 import org.openqa.selenium.WebDriver;
 

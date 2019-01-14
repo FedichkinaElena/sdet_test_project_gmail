@@ -6,55 +6,54 @@
 
     <groupId>ru.sdet.projects</groupId>
     <artifactId>sdet_test_project_with_gmail</artifactId>
+    <!--<packaging>jar</packaging>-->
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.source>1.8</project.build.source>
+        <junit.version>4.12</junit.version>
+
         <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
-        <allure-junit4.version>2.6.0</allure-junit4.version>
+        <aspectj.version>1.8.13</aspectj.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <aspectj.version>1.8.10</aspectj.version>
-        <allure.version>{latest-allure-version}</allure.version>
+        <log4j.version>2.11.1</log4j.version>
+        <allure.version>2.6.0</allure.version>
+        <allure.maven.version>2.9</allure.maven.version>
+        <allure.results.directory>target/allure-results</allure.results.directory>
+        <allure.report.directory>target/allure-report</allure.report.directory>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.141.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.11</version>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-junit-adaptor</artifactId>
-            <version>1.5.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit4</artifactId>
-            <version>${allure-junit4.version}</version>
-        </dependency>
-    </dependencies>
-
     <build>
+        <!--<sourceDirectory>src/main/java</sourceDirectory>-->
+        <!--<testSourceDirectory>src/test/java</testSourceDirectory>-->
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <includes>
+                    <include>config.properties</include>
+                </includes>
+                <!--<targetPath>..</targetPath>-->
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.2</version>
                 <configuration>
+                    <target>${project.build.source}</target>
+                    <source>${project.build.source}</source>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <shutdown>kill</shutdown>
                     <systemPropertyVariables>
                         <at.base.url>http://gmail.com</at.base.url>
                         <at.login>testing0tester924@gmail.com</at.login>
@@ -67,12 +66,11 @@
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
-                        </property>
-                    </properties>
+                    <suiteXmlFiles>
+                        <file>resources/TestNG.xml</file>
+                        <!--<suiteXmlFile>${basedir}/src/test/resources/testpack.xml</suiteXmlFile>-->
+                        <!--<suiteXmlFile>${basedir}/src/test/resources/TestNG.xml</suiteXmlFile>-->
+                    </suiteXmlFiles>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -82,8 +80,49 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven.version}</version>
+                <configuration>
+                    <propertiesFilePath>src/test/resources/allure.properties</propertiesFilePath>
+                    <reportVersion>2.6.0</reportVersion>
+                    <reportDirectory>${basedir}/allure-report</reportDirectory>
+                    <resultsDirectory>${basedir}/allure-results</resultsDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-testng-adaptor</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.8.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+        </dependency>
+    </dependencies>
 
     <reporting>
         <excludeDefaults>true</excludeDefaults>
@@ -121,4 +160,20 @@
         </dependencies>
     </dependencyManagement>
 
+    <!--<reporting>-->
+        <!--<excludeDefaults>true</excludeDefaults>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>io.qameta.allure</groupId>-->
+                <!--<artifactId>allure-maven</artifactId>-->
+                <!--<version>${allure.maven.version}</version>-->
+                <!--<configuration>-->
+                    <!--<propertiesFilePath>src/test/resources/allure.properties</propertiesFilePath>-->
+                    <!--<reportVersion>2.6.0</reportVersion>-->
+                    <!--<reportDirectory>${basedir}/allure-report</reportDirectory>-->
+                    <!--<resultsDirectory>${basedir}/allure-results</resultsDirectory>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</reporting>-->
 </project>
