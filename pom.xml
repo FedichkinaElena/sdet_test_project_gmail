@@ -58,9 +58,9 @@
                         <at.base.url>http://gmail.com</at.base.url>
                         <at.login>testing0tester924@gmail.com</at.login>
                         <at.password>Axaha0test.</at.password>
-                        <at.userName.from>Алена Федичкина</at.userName.from>
+                        <at.userName.from>Филинин Илья</at.userName.from>
                         <at.tester.name>Федичкина Елена</at.tester.name>
-                        <at.email.to>nika-alenka@mail.ru</at.email.to>
+                        <at.email.to>ilya.filinin@simbirsoft.com</at.email.to>
                     </systemPropertyVariables>
                     <testFailureIgnore>false</testFailureIgnore>
                     <argLine>
