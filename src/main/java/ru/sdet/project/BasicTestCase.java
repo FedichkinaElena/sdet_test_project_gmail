@@ -1,11 +1,10 @@
-package ru.sdet.projects.pages;
+package ru.sdet.project;
 
 import org.junit.AfterClass;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
@@ -13,16 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 public class BasicTestCase {
     protected static WebDriver driver;
-//    @Parameters({"browserName", "browserVersion"})
-//    @BeforeClass
-//    public static void setUp(@Optional String browserName, String browserVersion){
-//        WebDriverInstansiator.setDriver(browserName, browserVersion);
-//    }
 
     public static WebDriver getWebDriver(String driverType) throws MalformedURLException {
         DesiredCapabilities capability;
-//        String baseUrl = "http://gmail.com";
-        String baseUrl = System.getProperty("at.base.url");
         if (driverType.equalsIgnoreCase("firefox")) {
             capability = DesiredCapabilities.firefox();
             capability.setBrowserName("firefox");
@@ -48,7 +40,7 @@ public class BasicTestCase {
 //        }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(baseUrl);
+        driver.get(System.getProperty("at.base.url"));
         return driver;
     }
 

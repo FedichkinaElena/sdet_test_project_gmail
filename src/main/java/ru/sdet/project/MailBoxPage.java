@@ -1,4 +1,4 @@
-package ru.sdet.projects.pages;
+package ru.sdet.project;
 
 import io.qameta.allure.Step;
 import org.junit.Assert;
@@ -16,7 +16,7 @@ public class MailBoxPage {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-    protected WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(id = "identifierId")
     private WebElement txtInputLogin;
@@ -31,7 +31,7 @@ public class MailBoxPage {
     private WebElement btnPasswordNext;
 
     @FindBy(css = "input[placeholder='Поиск в почте']")
-    public WebElement txtInputSearchParam;
+    private WebElement txtInputSearchParam;
 
     @FindBy(xpath = "//div[@aria-label='Показать другие сообщения']/span[@class='Dj']/./span/span[@class='ts']")
 //    @FindBy(xpath = "//div[not(@style='display:none;')]/.//span/div[@aria-label='Показать другие сообщения' and @role='button']/span/span[2]")
@@ -59,22 +59,22 @@ public class MailBoxPage {
     @FindBy(xpath = "//span[text()='Письмо отправлено.']")
     private WebElement lblSentEmail;
 
-    public void inputLogin(String login) {
+    private void inputLogin(String login) {
         txtInputLogin.sendKeys(login);
     }
 
-    public void clickBtnLoginNext() {
+    private void clickBtnLoginNext() {
         btnLoginNext.click();
     }
 
-    public void inputPassword(String password) {
+    private void inputPassword(String password) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(txtInputPassword));
         wait.until(ExpectedConditions.elementToBeClickable(txtInputPassword));
         txtInputPassword.sendKeys(password);
     }
 
-    public void clickBtnPasswordNext() {
+    private void clickBtnPasswordNext() {
         btnPasswordNext.click();
     }
 
@@ -99,8 +99,8 @@ public class MailBoxPage {
         Assert.assertTrue(lblSentEmail.isDisplayed());
     }
 
-    @Step("Залогиниться в хардкодную почту")
-    public void loginUserMail(String login, String password){//MailBoxPage page){
+    @Step("Залогиниться в почту {login}")
+    public void loginUserMail(String login, String password){
         this.inputLogin(login);
         this.clickBtnLoginNext();
         Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
@@ -108,7 +108,7 @@ public class MailBoxPage {
         this.clickBtnPasswordNext();
     }
 
-    @Step("Поиск писем от заданного отправителя")
+    @Step("Поиск писем от {userNameFrom}")
     public void searchMailFrom(String userNameFrom){
         this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
     }
@@ -118,11 +118,11 @@ public class MailBoxPage {
         return lblCounter.getAttribute("innerHTML");
     }
 
-    @Step("Отправить новое письмо")
-    public void sendNewEmail(String nameFrom, String emailSubjecr, String emailBody) {
+    @Step("Отправить новое письмо от {nameFrom} с темой {emailSubject}, а в теле {emailBody}")
+    public void sendNewEmail(String nameFrom, String emailSubject, String emailBody) {
         btnCreateNewMail.click();
         setEmailFrom(nameFrom);
-        setEmailSubject(emailSubjecr);
+        setEmailSubject(emailSubject);
         inputEmailBody(emailBody);
         btnSendEmail.click();
         checkEmailSent();
