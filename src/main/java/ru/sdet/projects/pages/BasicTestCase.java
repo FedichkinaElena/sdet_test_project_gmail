@@ -19,6 +19,8 @@ public class BasicTestCase {
 //        WebDriverInstansiator.setDriver(browserName, browserVersion);
 //    }
 
+
+
     public static WebDriver getWebDriver(String driverType) throws MalformedURLException {
         DesiredCapabilities capability;
 //        String baseUrl = "http://gmail.com";

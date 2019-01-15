@@ -33,11 +33,6 @@ public class FireFoxTest extends BasicTestCase {
 
     @BeforeClass
     public static void setup() throws MalformedURLException {
-//        String baseUrl = "http://gmail.com";
-//        driver = new FirefoxDriver();
-//        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        driver.get(baseUrl);
         driver = getWebDriver("firefox");
         firefoxPage = PageFactory.initElements(driver, MailBoxPage.class);
     }

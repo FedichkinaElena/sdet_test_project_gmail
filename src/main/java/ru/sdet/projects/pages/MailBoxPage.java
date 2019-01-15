@@ -33,6 +33,9 @@ public class MailBoxPage {
     @FindBy(css = "input[placeholder='Поиск в почте']")
     public WebElement txtInputSearchParam;
 
+
+
+
     @FindBy(xpath = "//div[@aria-label='Показать другие сообщения']/span[@class='Dj']/./span/span[@class='ts']")
 //    @FindBy(xpath = "//div[not(@style='display:none;')]/.//span/div[@aria-label='Показать другие сообщения' and @role='button']/span/span[2]")
     private WebElement lblCounter;
@@ -110,7 +113,9 @@ public class MailBoxPage {
 
     @Step("Поиск писем от заданного отправителя")
     public void searchMailFrom(String userNameFrom){
-        this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
+//        this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
+        this.txtInputSearchParam.sendKeys("from:" + userNameFrom);
+        this.txtInputSearchParam.submit();
     }
 
     @Step("Поиск кол-ва найденных писем")

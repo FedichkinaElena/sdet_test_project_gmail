@@ -7,7 +7,7 @@ public class WebDriverInstansiator {
     private static InheritableThreadLocal<WebDriver> webDriver = new InheritableThreadLocal<WebDriver>();
     private static WebDriverFactory factory;
 
-    protected static void setDriver(String browserName, String browserVersion){
+    public static void setDriver(String browserName, String browserVersion){
         factory = new WebDriverFactory();
         webDriver.set(factory.getInstance(browserName, browserVersion));
     }

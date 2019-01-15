@@ -53,7 +53,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14</version>
+                <version>2.16</version>
                 <configuration>
                     <systemPropertyVariables>
                         <at.base.url>http://gmail.com</at.base.url>
@@ -89,9 +89,9 @@
         <excludeDefaults>true</excludeDefaults>
         <plugins>
             <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.9</version>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-maven-plugin</artifactId>
+                <version>LATEST</version>
             </plugin>
         </plugins>
     </reporting>
