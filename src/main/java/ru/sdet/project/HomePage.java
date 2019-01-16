@@ -1,6 +1,7 @@
 package ru.sdet.project;
 
 import org.junit.AfterClass;
+import org.omg.CORBA.Any;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,44 +26,35 @@ public class HomePage {
 //        WebDriverInstansiator.setDriver(browserName, browserVersion);
 //    }
 
-    public static WebDriver getWebDriver(String driverType, String browserName) throws MalformedURLException {
-        DesiredCapabilities capability = new DesiredCapabilities();
+    public static WebDriver getWebDriver(String browserName) throws MalformedURLException {
+        DesiredCapabilities capability = null; //new DesiredCapabilities();
         String baseUrl = System.getProperty("at.base.url");
-
-        if (driverType.equalsIgnoreCase("remote")) {
-            try {
-//                DesiredCapabilities capability = new DesiredCapabilities();
-                capability.setBrowserName(browserName);
-//                capability.setVersion("64.0.2");
-                capability.setPlatform(Platform.WINDOWS);
-                driver = new RemoteWebDriver(new URL("http://localhost:4443/wd/hub"), capability);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+        if(browserName.equals("firefox")){
+            capability = DesiredCapabilities.firefox();
+            capability.setBrowserName("firefox");
+            capability.setPlatform(Platform.WINDOWS);
+        }else{
+            capability = DesiredCapabilities.chrome();
+            capability.setBrowserName("chrome");
+            capability.setPlatform(Platform.WINDOWS);
         }
-        if (browserName.equalsIgnoreCase("firefox")) {
-                capability = DesiredCapabilities.firefox();
-                capability.setBrowserName("firefox");
-                capability.setVersion("64.0.2");
+        driver = new RemoteWebDriver(new URL("http://192.168.0.27:4443/wd/hub"), capability);
 
-//                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
-//                driver = new FirefoxDriver();
-            } else if (browserName.equalsIgnoreCase("chrome")) {
-                capability = DesiredCapabilities.chrome();
-                capability.setBrowserName("chrome");
-//                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-//                driver = new ChromeDriver();
-            } else if (browserName.equalsIgnoreCase("opera")) {
-            capability = DesiredCapabilities.operaBlink();
-            capability.setBrowserName("opera");
-//                System.setProperty("webdriver.opera.driver", "src/main/resources/operadriver.exe");
-//                driver = new OperaDriver();
-        }
-
-
+//        if (driverType.equalsIgnoreCase("remote")) {
+//            try {
+////                DesiredCapabilities capability = new DesiredCapabilities();
+//                capability.setBrowserName(browserName);
+////                capability.setVersion(Any);
+//                capability.setPlatform(Platform.WINDOWS);
+//                driver = new RemoteWebDriver(new URL("http://192.168.0.27:4443/wd/hub"), capability);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+//        }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(baseUrl);
+        driver.navigate().to(baseUrl);
+//        driver.get(baseUrl);
         return driver;
     }
 

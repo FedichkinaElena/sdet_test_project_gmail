@@ -11,15 +11,16 @@ import ru.sdet.projects.pages.WebDriverInstansiator;
 import java.net.MalformedURLException;
 
 import static ru.sdet.project.HomePage.getWebDriver;
+import static ru.sdet.projects.pages.BasicTestCase.getWebDriver;
 
 public class ChromeTest {
     private static WebDriver driver;
     private static LoginPage chromePage;
 
     @BeforeClass
-    public static void setup() throws MalformedURLException {
-        WebDriverInstansiator.setDriver( "chrome", null);
-        driver = getWebDriver("remote", "chrome");
+    public void setup() throws MalformedURLException {
+//        WebDriverInstansiator.setDriver( "chrome", null);
+        driver = HomePage.getWebDriver("chrome");
         chromePage = PageFactory.initElements(driver, LoginPage.class);
     }
 

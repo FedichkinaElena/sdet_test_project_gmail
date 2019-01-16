@@ -5,9 +5,11 @@
   "servlets" : [],
   "prioritizer": null,
   "capabilityMatcher": "org.openqa.grid.internal.utils.DefaultCapabilityMatcher",
+  "registry": "org.openqa.grid.internal.DefaultGridRegistry",
   "throwOnCapabilityNotPresent": true,
   "nodePolling": 5000,
-
+  "role": "hub",
+  "debug": false,
   "cleanUpCycle": 5000,
   "timeout": 300000,
   "maxSession": 5,

@@ -38,6 +38,6 @@ public class ChromeTest extends BasicTestCase {
         chromePage.sendNewEmail(
                 System.getProperty("at.email.to"),
                 "Тестовое задание. " + System.getProperty("at.tester.name"),
-                "От " + System.getProperty("at.username.from") + " найдено " + count + " писем.\nБраузер Chrome");
+                "От " + System.getProperty("at.userName.from") + " найдено " + count + " писем.\nБраузер Chrome");
     }
 }

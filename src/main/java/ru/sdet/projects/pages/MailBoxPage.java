@@ -103,7 +103,7 @@ public class MailBoxPage {
     }
 
     @Step("Залогиниться в хардкодную почту")
-    public void loginUserMail(String login, String password){//MailBoxPage page){
+    public void loginUserMail(String login, String password){
         this.inputLogin(login);
         this.clickBtnLoginNext();
         Assert.assertTrue(driver.getCurrentUrl().contains("https://accounts.google.com/signin/"));
@@ -113,9 +113,7 @@ public class MailBoxPage {
 
     @Step("Поиск писем от заданного отправителя")
     public void searchMailFrom(String userNameFrom){
-//        this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
-        this.txtInputSearchParam.sendKeys("from:" + userNameFrom);
-        this.txtInputSearchParam.submit();
+        this.txtInputSearchParam.sendKeys("from:" + userNameFrom + Keys.ENTER);
     }
 
     @Step("Поиск кол-ва найденных писем")

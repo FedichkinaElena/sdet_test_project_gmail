@@ -22,14 +22,6 @@ import java.util.concurrent.TimeUnit;
 public class FireFoxTest extends BasicTestCase {
     private static WebDriver driver;
     private static MailBoxPage firefoxPage;
-    private static String COUNT;
-    //    private static String USER_NAME_FROM = "Филинин Илья";
-//    private static String EMAIL_TO = "ilya.filinin@simbirsoft.com";
-//    private static String USER_NAME_FROM = "Алена Федичкина";
-//    private static String EMAIL_TO = "nika-alenka@mail.ru";
-//    private static String TESTER_NAME = "Федичкина Елена";
-//    private static String LOGIN = "testing0tester924@gmail.com";
-//    private static String PASSWORD = "Axaha0test.";
 
     @BeforeClass
     public static void setup() throws MalformedURLException {
@@ -48,11 +40,11 @@ public class FireFoxTest extends BasicTestCase {
         // поиск писем от заданного отправителя
         firefoxPage.searchMailFrom(userNameFrom);
         // поиск кол-ва найденных писем
-        COUNT = firefoxPage.getFoundMailCount();
+        String count = firefoxPage.getFoundMailCount();
         // отправка нового письма
         firefoxPage.sendNewEmail(
                 System.getProperty("at.email.to"),
                 "Тестовое задание. " + System.getProperty("at.tester.name"),
-                "От " + System.getProperty("at.username.from") + " найдено " + COUNT + " писем.\nБраузер Firefox");
+                "От " + System.getProperty("at.userName.from") + " найдено " + count + " писем.\nБраузер Firefox");
     }
 }

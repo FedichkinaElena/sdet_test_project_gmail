@@ -3,6 +3,7 @@
   [
     {
       "browserName": "firefox",
+      "marionette": true,
       "maxInstances": 2,
       "seleniumProtocol": "WebDriver"
     },
@@ -16,11 +17,19 @@
   {
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
     "maxSession": 5,
-    "port": 5559,
-    "host": "http://localhost/",
+    "port": -1,
+    "host": "192.168.0.27",
     "register": true,
     "registerCycle": 5000,
-    "hubPort": 4443,
-    "hubHost" : "http://localhost/"
+    "hub": "http://192.168.0.27:4443",
+    "nodeStatusCheckTimeout": 5000,
+    "nodePolling": 5000,
+    "role": "node",
+    "unregisterIfStillDownAfter": 60000,
+    "downPollingLimit": 2,
+    "debug": false,
+    "servlets" : [],
+    "withoutServlets": [],
+    "custom": {}
+    }
   }
-}

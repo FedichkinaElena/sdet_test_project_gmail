@@ -3,6 +3,7 @@ package ru.sdet.project;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,8 +34,7 @@ public class MailBoxPage {
     @Step("Поиск писем от заданного отправителя")
     public MailBoxPage typeSearchParam(String searchParam) {
         WebElement element = driver.findElement(txtSearchParamLocator);
-        element.sendKeys("from:" + searchParam);
-        element.submit();
+        element.sendKeys("from:" + searchParam + Keys.ENTER);
         return this;
     }
 
