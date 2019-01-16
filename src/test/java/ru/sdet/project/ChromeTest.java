@@ -4,14 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.sdet.project.HomePage;
-import ru.sdet.project.MailBoxPage;
-import ru.sdet.projects.pages.WebDriverInstansiator;
 
 import java.net.MalformedURLException;
-
-import static ru.sdet.project.HomePage.getWebDriver;
-import static ru.sdet.projects.pages.BasicTestCase.getWebDriver;
 
 public class ChromeTest {
     private static WebDriver driver;
@@ -19,8 +13,7 @@ public class ChromeTest {
 
     @BeforeClass
     public void setup() throws MalformedURLException {
-//        WebDriverInstansiator.setDriver( "chrome", null);
-        driver = HomePage.getWebDriver("chrome");
+        driver = SetDriver.getWebDriver("chrome");
         chromePage = PageFactory.initElements(driver, LoginPage.class);
     }
 
